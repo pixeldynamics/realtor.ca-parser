@@ -44,10 +44,7 @@ fetch("https://api2.realtor.ca/Listing.svc/PropertySearch_Post", {
 */
 .then(res => res.json())
 .then(json => {
-    //console.log(json)
-    let count = 0;
     for (let results of json.Results) {
-        //count++;
         console.log(results.Property.Address.AddressText);
     }
 });
