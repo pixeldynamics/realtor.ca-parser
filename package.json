@@ -1,0 +1,14 @@
+{
+  "name": "realtor-script",
+  "version": "1.0.0",
+  "description": "Realtor.ca parser",
+  "main": "index.js",
+  "scripts": {
+    "parser": "node index.js"
+  },
+  "author": "Mike B",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.3.0"
+  }
+}
