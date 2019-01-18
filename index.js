@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
+const fs = require('fs');
 
 /*
     1) GO TO: https://www.realtor.ca
@@ -17,7 +18,6 @@ const fetch = require('node-fetch');
     Replace with RecordsPerPage=200
 */
 
-
 /* ==================== REPLACE BELOW ======================== */
 fetch("https://api2.realtor.ca/Listing.svc/PropertySearch_Post", {
   credentials: "omit",
@@ -31,20 +31,26 @@ fetch("https://api2.realtor.ca/Listing.svc/PropertySearch_Post", {
   referrer: "https://www.realtor.ca/map",
   referrerPolicy: "no-referrer-when-downgrade",
   body:
-    "ZoomLevel=10&LatitudeMax=51.3591147&LongitudeMax=-113.4247125&LatitudeMin=50.7366534&LongitudeMin=-114.7169793&CurrentPage=1&PropertyTypeGroupID=1&PropertySearchTypeId=1&TransactionTypeId=2&PriceMin=0&PriceMax=0&BedRange=0-0&BathRange=0-0&RecordsPerPage=200&ApplicationId=1&CultureId=1&Version=7.0",
+    "ZoomLevel=10&LatitudeMax=51.3591147&LongitudeMax=-113.4247125&LatitudeMin=50.7366534&LongitudeMin=-114.7169793&CurrentPage=1&PropertyTypeGroupID=1&PropertySearchTypeId=1&TransactionTypeId=2&PriceMin=550000&PriceMax=0&BedRange=0-0&BathRange=0-0&RecordsPerPage=12&ApplicationId=1&CultureId=1&Version=7.0",
   method: "POST",
   mode: "cors"
 }) // REMOVE ;
-/* ========================= STOP ======================== */
+  /* ========================= STOP ======================== */
 
-
-
-/*
+  /*
     Do Not remove anything below here!
-*/
-.then(res => res.json())
-.then(json => {
-    for (let results of json.Results) {
-        console.log(results.Property.Address.AddressText);
-    }
-});
+  */
+  .then(res => res.json())
+  .then(json => {
+        let data = '';
+        for (let results of json.Results) {
+            var address = results.Property.Address.AddressText;
+            console.log(address);
+            data = data + address + "\n"
+        }
+
+        fs.writeFile('address.txt', data, function(err, data){
+            if (err) console.log(err);
+        });
+
+  });
